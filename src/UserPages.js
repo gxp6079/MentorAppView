@@ -3,7 +3,7 @@ import { Tabs, TabPane, Heading, Button } from "@athena/forge";
 import { Redirect, Link } from "react-router-dom";
 
 function UserPages(props) {
-  const tabIndex = 1;
+  const tabIndex = props.location.pathname === "/userPage/mentee" ? 1 : 0;
   const [user, setUser] = useState(props.location.query.user);
 
   function updateUsers(updatedUser) {
