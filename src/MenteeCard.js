@@ -4,18 +4,19 @@ import moment from "moment";
 
 function MenteeCard(props) {
   const now = moment();
-  const endTime = moment(props.mentorinRelation.expirationDate);
+  const endTime = moment(props.mentoringRelation.expirationDate);
   const diff = endTime.diff(now);
   const months = moment.duration(diff).asMonths();
 
   function updateTime() {
-    props.updateTime(props.mentorinRelation.mentee);
+    debugger;
+    props.updateTime(props.mentoringRelation.id);
   }
 
   return (
     <>
       <Heading
-        text={props.mentorinRelation.mentee}
+        text={props.mentoringRelation.mentee}
         variant="section"
         className="fe_u_font-weight--regular"
       />
@@ -29,15 +30,15 @@ function MenteeCard(props) {
           className="fe_u_font-size--default fe_u_padding--right-small"
           style={{ display: "inline-block" }}
         >
-          Matched {props.mentorinRelation.matchedDate}
+          Matched {props.mentoringRelation.matchedDate}
         </p>
         <p
           className="fe_u_font-size--default fe_u_padding--left-small"
           style={{ display: "inline-block" }}
         >
-          Expires {props.mentorinRelation.expirationDate}
+          Expires {props.mentoringRelation.expirationDate}
         </p>
-        {months <= 1 && (
+        {months <= 1 && !props.mentoringRelation.mentorUpdate && (
           <Button
             className="fe_u_margin--left-small"
             variant="tertiary"

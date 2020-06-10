@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Heading, Select, Button, Banner, BannerItem } from "@athena/forge";
 import { editUser } from "./api/userAPI";
+import { editRelations } from "./api/relationshipAPI";
 import MenteeCard from "./MenteeCard";
 import moment from "moment";
 
 function Mentee(props) {
   const [user, setUser] = useState(props.location.query.user);
+  const [mentees, setMentees] = useState(props.location.query.mentees);
   const [capacity, setCapacity] = useState(user.menteeCapacity);
   const [availability, setAvailability] = useState(
     user.menteeCapacity - user.mentees.length
@@ -22,20 +24,26 @@ function Mentee(props) {
     });
   }
 
-  function updateTime(menteeName) {
-    const newMentees = user.mentees.map((_mentee) => {
-      if (_mentee.mentee === menteeName) {
-        const newExp = moment(_mentee.expirationDate)
-          .add(6, "months")
-          .format("MM/DD/YYYY");
-        return { ..._mentee, expirationDate: newExp };
+  function updateTime(relationId) {
+    const newMentees = mentees.map((_mentee) => {
+      if (_mentee.id === relationId) {
+        if (_mentee.menteeUpdate) {
+          const newExp = moment(_mentee.expirationDate)
+            .add(6, "months")
+            .format("MM/DD/YYYY");
+          return { ..._mentee, expirationDate: newExp, menteeUpdate: false };
+        } else {
+          return { ..._mentee, mentorUpdate: true };
+        }
       }
       return _mentee;
     });
-    const newUser = { ...user, mentees: newMentees };
-    setUser(newUser);
-    editUser(newUser);
-    props.location.query.updateUser(newUser);
+    const editedRelation = newMentees.filter(
+      (mentee) => mentee.id === relationId
+    )[0];
+    setMentees(newMentees);
+    editRelations(editedRelation);
+    props.location.query.updateRelation(newMentees);
   }
 
   return (
@@ -67,11 +75,11 @@ function Mentee(props) {
           )}
         </div>
         <ol>
-          {user.mentees.map((_mentee) => {
+          {mentees.map((_mentee) => {
             return (
-              <li key={_mentee.mentee} className="fe_u_font-size--large">
+              <li key={_mentee.id} className="fe_u_font-size--large">
                 <MenteeCard
-                  mentorinRelation={_mentee}
+                  mentoringRelation={_mentee}
                   updateTime={updateTime}
                 />
               </li>

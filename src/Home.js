@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Heading, Button } from "@athena/forge";
 import { useRouteMatch, Link, Redirect, Route } from "react-router-dom";
 import { editUser } from "./api/userAPI";
+import { getRelations } from "./api/relationshipAPI";
 
 function Home(props) {
   const match = useRouteMatch();
@@ -18,6 +19,22 @@ function Home(props) {
       ? "My Mentees"
       : "Become a Mentor"
   );
+  const [mentees, setMentees] = useState([]);
+  const [mentor, setMentor] = useState({});
+
+  useEffect(() => {
+    getRelations().then((_relations) => {
+      const newMentees = _relations.filter((relation) => {
+        const inside = user.mentees.some((item) => item === relation.id);
+        return inside;
+      });
+      debugger;
+      setMentees(newMentees);
+      setMentor(
+        _relations.filter((relation) => user.mentor === relation.id)[0]
+      );
+    });
+  }, []);
 
   function logout() {
     setLoggingOut(true);
@@ -79,8 +96,10 @@ function Home(props) {
               pathname: "/userPage/mentor",
               query: {
                 user: user,
-                updateUser: props.updateUser,
-                turnSearchinOn: setSearchingForMentor,
+                mentor: mentor,
+                updateRelation: {},
+                updeteMentor: {},
+                mentees: mentees,
               },
             }}
           >
@@ -100,7 +119,10 @@ function Home(props) {
               pathname: "/userPage/mentee",
               query: {
                 user: user,
-                updateUser: props.updateUser,
+                mentor: mentor,
+                updateRelation: {},
+                updeteMentor: {},
+                mentees: mentees,
               },
             }}
           >

@@ -13,7 +13,7 @@ function MentorCard(props) {
   debugger;
 
   function updateTime() {
-    //props.updateTime();
+    props.updateTime(props.mentorinRelation.mentee);
   }
 
   function releaseMentor() {
@@ -46,7 +46,7 @@ function MentorCard(props) {
         >
           Expires {props.mentorinRelation.expirationDate}
         </p>
-        {months <= 1 && (
+        {months <= 1 && !props.mentorinRelation.menteeUpdate && (
           <Button
             className="fe_u_margin--left-small"
             variant="tertiary"

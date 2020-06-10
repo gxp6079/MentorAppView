@@ -1,9 +1,28 @@
 import React, { useState } from "react";
 import { Heading } from "@athena/forge";
 import MentorCard from "./MentorCard";
+import moment from "moment";
+import { editRelations } from "./api/relationshipAPI";
 
 function Mentor(props) {
-  const [user, setUser] = useState(props.location.query.user);
+  const [mentor, setMentor] = useState(props.location.query.mentor);
+  debugger;
+
+  function updateTime() {
+    const newMentor = { ...mentor };
+    if (mentor.mentorUpdate) {
+      const newExp = moment(mentor.expirationDate)
+        .add(6, "months")
+        .format("MM/DD/YYYY");
+      newMentor.expirationDate = newExp;
+      newMentor.mentorUpdate = false;
+    } else {
+      newMentor.menteeUpdate = true;
+    }
+    setMentor(newMentor);
+    editRelations(newMentor);
+    props.location.query.updeteMentor(newMentor);
+  }
 
   return (
     <>
@@ -15,7 +34,9 @@ function Mentor(props) {
           fontWeight: "normal",
         }}
       />
-      {user.mentor !== null && <MentorCard mentorinRelation={user.mentor} />}
+      {mentor !== null && (
+        <MentorCard mentorinRelation={mentor} updateTime={updateTime} />
+      )}
     </>
   );
 }

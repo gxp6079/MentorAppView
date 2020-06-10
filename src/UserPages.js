@@ -5,6 +5,8 @@ import { Redirect, Link } from "react-router-dom";
 function UserPages(props) {
   const tabIndex = props.location.pathname === "/userPage/mentee" ? 1 : 0;
   const [user, setUser] = useState(props.location.query.user);
+  const [mentees, setMentees] = useState(props.location.query.mentees);
+  const [mentor, setMentor] = useState({});
 
   function updateUsers(updatedUser) {
     setUser(updatedUser);
@@ -42,7 +44,10 @@ function UserPages(props) {
               pathname: "/userPage/mentor",
               query: {
                 user: user,
-                updateUser: updateUsers,
+                mentees: mentees,
+                mentor: mentor,
+                updateRelation: setMentees,
+                updeteMentor: setMentor,
               },
             }}
           />
@@ -53,7 +58,10 @@ function UserPages(props) {
               pathname: "/userPage/mentee",
               query: {
                 user: user,
-                updateUser: updateUsers,
+                mentees: mentees,
+                mentor: mentor,
+                updateRelation: setMentees,
+                updeteMentor: setMentor,
               },
             }}
           />
