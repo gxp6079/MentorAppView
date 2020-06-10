@@ -24,7 +24,7 @@ function Mentee(props) {
 
   function updateTime(menteeName) {
     const newMentees = user.mentees.map((_mentee) => {
-      if (_mentee.name === menteeName) {
+      if (_mentee.mentee === menteeName) {
         const newExp = moment(_mentee.expirationDate)
           .add(6, "months")
           .format("MM/DD/YYYY");
@@ -69,8 +69,11 @@ function Mentee(props) {
         <ol>
           {user.mentees.map((_mentee) => {
             return (
-              <li key={_mentee.name} className="fe_u_font-size--large">
-                <MenteeCard mentee={_mentee} updateTime={updateTime} />
+              <li key={_mentee.mentee} className="fe_u_font-size--large">
+                <MenteeCard
+                  mentorinRelation={_mentee}
+                  updateTime={updateTime}
+                />
               </li>
             );
           })}

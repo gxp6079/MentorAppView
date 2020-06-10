@@ -5,17 +5,20 @@
       "menteeCapacity": 3,
       "mentees": [
         {
-          "name": "usr2",
+          "mentor": "usr1",
+          "mentee": "usr2",
           "matchedDate": "06/09/2020",
           "expirationDate": "12/09/2020"
         },
         {
-          "name": "usr3",
-          "matchedDate": "01/09/2020",
-          "expirationDate": "01/09/2021"
+          "mentor": "usr1",
+          "mentee": "usr3",
+          "matchedDate": "01/10/2020",
+          "expirationDate": "07/10/2020"
         }
       ],
-      "mentor": "",
+      "mentor": null,
+      "searching": false,
       "id": 0
     },
     {
@@ -23,40 +26,61 @@
       "menteeCapacity": 2,
       "mentees": [
         {
-          "name": "usr4",
+          "mentor": "usr2",
+          "mentee": "usr4",
           "matchedDate": "06/09/2020",
           "expirationDate": "12/09/2020"
         }
       ],
-      "mentor": "",
+      "mentor": {
+        "mentor": "usr1",
+        "mentee": "usr2",
+        "matchedDate": "06/09/2020",
+        "expirationDate": "12/09/2020"
+      },
+      "searching": false,
       "id": 1
     },
     {
       "name": "usr3",
-      "menteeCapacity": 1,
+      "menteeCapacity": 0,
       "mentees": [],
-      "mentor": "",
+      "mentor": {
+        "mentor": "usr1",
+        "mentee": "usr3",
+        "matchedDate": "01/09/2020",
+        "expirationDate": "07/10/2020"
+      },
+      "searching": false,
       "id": 2
     },
     {
       "name": "usr4",
       "menteeCapacity": 1,
       "mentees": [],
-      "mentor": "",
+      "mentor": {
+        "mentor": "usr2",
+        "mentee": "usr4",
+        "matchedDate": "06/09/2020",
+        "expirationDate": "12/09/2020"
+      },
+      "searching": false,
       "id": 3
     },
     {
       "name": "usr5",
       "menteeCapacity": 1,
       "mentees": [],
-      "mentor": "",
+      "mentor": null,
+      "searching": false,
       "id": 4
     },
     {
       "name": "usr6",
       "menteeCapacity": 1,
       "mentees": [],
-      "mentor": "",
+      "mentor": null,
+      "searching": true,
       "id": 5
     }
   ]

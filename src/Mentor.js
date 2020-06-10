@@ -1,8 +1,10 @@
-import React from "react";
-import UserPages from "./UserPages";
+import React, { useState } from "react";
 import { Heading } from "@athena/forge";
+import MentorCard from "./MentorCard";
 
 function Mentor(props) {
+  const [user, setUser] = useState(props.location.query.user);
+
   return (
     <>
       <Heading
@@ -13,6 +15,7 @@ function Mentor(props) {
           fontWeight: "normal",
         }}
       />
+      {user.mentor !== null && <MentorCard mentorinRelation={user.mentor} />}
     </>
   );
 }
