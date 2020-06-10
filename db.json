@@ -1,0 +1,63 @@
+{
+  "athena-users": [
+    {
+      "name": "usr1",
+      "menteeCapacity": 3,
+      "mentees": [
+        {
+          "name": "usr2",
+          "matchedDate": "06/09/2020",
+          "expirationDate": "12/09/2020"
+        },
+        {
+          "name": "usr3",
+          "matchedDate": "01/09/2020",
+          "expirationDate": "01/09/2021"
+        }
+      ],
+      "mentor": "",
+      "id": 0
+    },
+    {
+      "name": "usr2",
+      "menteeCapacity": 2,
+      "mentees": [
+        {
+          "name": "usr4",
+          "matchedDate": "06/09/2020",
+          "expirationDate": "12/09/2020"
+        }
+      ],
+      "mentor": "",
+      "id": 1
+    },
+    {
+      "name": "usr3",
+      "menteeCapacity": 1,
+      "mentees": [],
+      "mentor": "",
+      "id": 2
+    },
+    {
+      "name": "usr4",
+      "menteeCapacity": 1,
+      "mentees": [],
+      "mentor": "",
+      "id": 3
+    },
+    {
+      "name": "usr5",
+      "menteeCapacity": 1,
+      "mentees": [],
+      "mentor": "",
+      "id": 4
+    },
+    {
+      "name": "usr6",
+      "menteeCapacity": 1,
+      "mentees": [],
+      "mentor": "",
+      "id": 5
+    }
+  ]
+}
