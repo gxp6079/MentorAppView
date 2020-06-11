@@ -11,16 +11,13 @@ function Home(props) {
     props.users.filter((_user) => _user.id === parseInt(userId))[0]
   );
   const [loggingOut, setLoggingOut] = useState(false);
-  const [mentorSatus, setMentorStatus] = useState(
-    user.mentor !== null || user.searching ? "My Mentor" : "Get a Mentor"
-  );
   const [mentoringStatus, setMentoringStatus] = useState(
     user.menteeCapacity !== 0 || user.mentees.length !== 0
       ? "My Mentees"
       : "Become a Mentor"
   );
   const [mentees, setMentees] = useState([]);
-  const [mentor, setMentor] = useState({});
+  const [mentor, setMentor] = useState(null);
 
   useEffect(() => {
     getRelations().then((_relations) => {
@@ -28,11 +25,14 @@ function Home(props) {
         const inside = user.mentees.some((item) => item === relation.id);
         return inside;
       });
-      debugger;
       setMentees(newMentees);
-      setMentor(
-        _relations.filter((relation) => user.mentor === relation.id)[0]
-      );
+      if (user.mentor) {
+        setMentor(
+          _relations.filter((relation) => user.mentor === relation.id)[0]
+        );
+      } else {
+        setMentor(null);
+      }
     });
   }, []);
 
@@ -40,20 +40,24 @@ function Home(props) {
     setLoggingOut(true);
   }
 
-  function setSearchingForMentor() {
-    const newUser = { ...user, searching: true };
-    editUser(newUser);
-    props.updateUser(newUser);
-    setUser(newUser);
-    setMentorStatus("My Mentor");
-  }
-
   function setSearchingForMentee() {
     const newUser = { ...user, menteeCapacity: 1 };
     editUser(newUser);
-    props.updateUser(newUser);
+    props.updateUser([newUser]);
     setUser(newUser);
     setMentoringStatus("My Mentees");
+  }
+
+  function removeRelationship(mentee) {
+    debugger;
+    const mentorUser = props.users.filter(
+      (_user) => _user.name === mentor.mentor
+    )[0];
+    mentorUser.mentees = mentorUser.mentees.filter((id) => id !== mentor.id);
+    mentorUser.pastMentees.push(mentor.id);
+    editUser(mentorUser).then(() => {
+      props.updateUser([mentorUser, mentee]);
+    });
   }
 
   return (
@@ -90,28 +94,22 @@ function Home(props) {
           alignItems: "center",
         }}
       >
-        {mentorSatus === "My Mentor" ? (
-          <Link
-            to={{
-              pathname: "/userPage/mentor",
-              query: {
-                user: user,
-                mentor: mentor,
-                updateRelation: {},
-                updeteMentor: {},
-                mentees: mentees,
-              },
-            }}
-          >
-            <Button text={mentorSatus} className="fe_u_margin--medium" />
-          </Link>
-        ) : (
-          <Button
-            text={mentorSatus}
-            onClick={setSearchingForMentor}
-            className="fe_u_margin--medium"
-          />
-        )}
+        <Link
+          to={{
+            pathname: "/userPage/mentor",
+            query: {
+              user: user,
+              mentor: mentor,
+              updateRelation: {},
+              updeteMentor: {},
+              updateUser: props.updateUser,
+              mentees: mentees,
+              removeMentor: removeRelationship,
+            },
+          }}
+        >
+          <Button text={"My Mentor"} className="fe_u_margin--medium" />
+        </Link>
 
         {mentoringStatus === "My Mentees" ? (
           <Link
@@ -122,7 +120,9 @@ function Home(props) {
                 mentor: mentor,
                 updateRelation: {},
                 updeteMentor: {},
+                updateUser: props.updateUser,
                 mentees: mentees,
+                removeMentor: removeRelationship,
               },
             }}
           >

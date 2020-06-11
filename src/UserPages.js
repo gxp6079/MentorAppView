@@ -6,11 +6,17 @@ function UserPages(props) {
   const tabIndex = props.location.pathname === "/userPage/mentee" ? 1 : 0;
   const [user, setUser] = useState(props.location.query.user);
   const [mentees, setMentees] = useState(props.location.query.mentees);
-  const [mentor, setMentor] = useState({});
+  const [mentor, setMentor] = useState(props.location.query.mentor);
 
-  function updateUsers(updatedUser) {
+  function updateUser(updatedUser) {
     setUser(updatedUser);
-    props.location.query.updateUser(updatedUser);
+    debugger;
+    props.location.query.updateUser([updatedUser]);
+  }
+
+  function removeMentor(newUser) {
+    setMentor(null);
+    props.location.query.removeMentor(newUser);
   }
 
   return (
@@ -48,6 +54,8 @@ function UserPages(props) {
                 mentor: mentor,
                 updateRelation: setMentees,
                 updeteMentor: setMentor,
+                updateUser: updateUser,
+                removeMentor: removeMentor,
               },
             }}
           />
@@ -62,6 +70,8 @@ function UserPages(props) {
                 mentor: mentor,
                 updateRelation: setMentees,
                 updeteMentor: setMentor,
+                updateUser: updateUser,
+                removeMentor: removeMentor,
               },
             }}
           />

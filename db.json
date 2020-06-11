@@ -3,7 +3,11 @@
     {
       "name": "usr1",
       "menteeCapacity": 3,
-      "mentees": [0, 1],
+      "mentees": [
+        0,
+        1
+      ],
+      "pastMentees": [],
       "mentor": null,
       "searching": true,
       "id": 0
@@ -11,7 +15,10 @@
     {
       "name": "usr2",
       "menteeCapacity": 2,
-      "mentees": [2],
+      "mentees": [
+        2
+      ],
+      "pastMentees": [],
       "mentor": 0,
       "searching": false,
       "id": 1
@@ -20,6 +27,7 @@
       "name": "usr3",
       "menteeCapacity": 0,
       "mentees": [],
+      "pastMentees": [],
       "mentor": 1,
       "searching": false,
       "id": 2
@@ -28,6 +36,7 @@
       "name": "usr4",
       "menteeCapacity": 1,
       "mentees": [],
+      "pastMentees": [],
       "mentor": 2,
       "searching": false,
       "id": 3
@@ -36,6 +45,7 @@
       "name": "usr5",
       "menteeCapacity": 1,
       "mentees": [],
+      "pastMentees": [],
       "mentor": null,
       "searching": false,
       "id": 4
@@ -44,6 +54,7 @@
       "name": "usr6",
       "menteeCapacity": 1,
       "mentees": [],
+      "pastMentees": [],
       "mentor": null,
       "searching": true,
       "id": 5
@@ -62,8 +73,8 @@
     {
       "mentor": "usr1",
       "mentee": "usr3",
-      "matchedDate": "01/10/2020",
-      "expirationDate": "07/10/2020",
+      "matchedDate": "01/15/2020",
+      "expirationDate": "07/11/2020",
       "menteeUpdate": false,
       "mentorUpdate": false,
       "id": 1

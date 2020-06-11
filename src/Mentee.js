@@ -6,6 +6,7 @@ import MenteeCard from "./MenteeCard";
 import moment from "moment";
 
 function Mentee(props) {
+  debugger;
   const [user, setUser] = useState(props.location.query.user);
   const [mentees, setMentees] = useState(props.location.query.mentees);
   const [capacity, setCapacity] = useState(user.menteeCapacity);

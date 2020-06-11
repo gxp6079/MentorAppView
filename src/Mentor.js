@@ -1,27 +1,54 @@
 import React, { useState } from "react";
-import { Heading } from "@athena/forge";
+import { Heading, Button, Banner, BannerItem } from "@athena/forge";
 import MentorCard from "./MentorCard";
 import moment from "moment";
 import { editRelations } from "./api/relationshipAPI";
+import { editUser } from "./api/userAPI";
 
 function Mentor(props) {
+  const [user, setUser] = useState(props.location.query.user);
   const [mentor, setMentor] = useState(props.location.query.mentor);
   debugger;
 
-  function updateTime() {
+  function setSearchingForMentor() {
+    const newUser = { ...user, searching: true };
+    editUser(newUser);
+    props.location.query.updateUser(newUser);
+    setUser(newUser);
+  }
+
+  function updateTime(renew) {
     const newMentor = { ...mentor };
-    if (mentor.mentorUpdate) {
+    if (mentor.mentorUpdate && renew) {
       const newExp = moment(mentor.expirationDate)
         .add(6, "months")
         .format("MM/DD/YYYY");
       newMentor.expirationDate = newExp;
       newMentor.mentorUpdate = false;
-    } else {
+      setMentor(newMentor);
+    } else if (renew) {
       newMentor.menteeUpdate = true;
+      setMentor(newMentor);
+    } else {
+      const newExp = moment().format("MM/DD/YYYY");
+      newMentor.expirationDate = newExp;
     }
-    setMentor(newMentor);
     editRelations(newMentor);
     props.location.query.updeteMentor(newMentor);
+  }
+
+  function releaseMentor(turnOnSearch) {
+    const newUser = { ...user, mentor: null };
+    debugger;
+    if (turnOnSearch) {
+      newUser.searching = true;
+    }
+    editUser(newUser).then(() => {
+      setUser(newUser);
+      setMentor(null);
+      updateTime(false);
+      props.location.query.removeMentor(newUser);
+    });
   }
 
   return (
@@ -35,7 +62,33 @@ function Mentor(props) {
         }}
       />
       {mentor !== null && (
-        <MentorCard mentorinRelation={mentor} updateTime={updateTime} />
+        <MentorCard
+          mentorinRelation={mentor}
+          updateTime={updateTime}
+          releaseMentor={releaseMentor}
+        />
+      )}
+
+      {mentor === null && !user.searching && (
+        <Button
+          text="Get a Mentor"
+          variant="secondary"
+          icon="Add"
+          className="fe_u_margin--left-xlarge"
+          onClick={setSearchingForMentor}
+        />
+      )}
+
+      {mentor === null && user.searching && (
+        <Banner
+          className="fe_u_margin--left-xlarge  fe_u_margin--right-xlarge fe_u_margin--bottom-xlarge"
+          alertType="info"
+        >
+          <BannerItem headerText="Mentor Requested">
+            When a new mentor match is ready you will be notified by email and
+            will be able to see the mentor's information below.
+          </BannerItem>
+        </Banner>
       )}
     </>
   );

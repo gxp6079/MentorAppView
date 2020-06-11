@@ -10,14 +10,13 @@ function MentorCard(props) {
   const started = now.diff(startTime);
   const months = moment.duration(endingIn).asMonths();
   const weeks = moment.duration(started).asWeeks();
-  debugger;
 
   function updateTime() {
-    props.updateTime(props.mentorinRelation.mentee);
+    props.updateTime(true);
   }
 
-  function releaseMentor() {
-    //release mentor
+  function releaseMentor(searching) {
+    props.releaseMentor(searching);
   }
 
   return (
@@ -72,7 +71,9 @@ function MentorCard(props) {
             style={{
               display: "inline-block",
             }}
-            onClick={releaseMentor}
+            onClick={() => {
+              releaseMentor(false);
+            }}
             className="fe_u_margin--right-small"
           />
           <Button
@@ -81,8 +82,7 @@ function MentorCard(props) {
               display: "inline-block",
             }}
             onClick={() => {
-              releaseMentor();
-              props.turnSearchinOn();
+              releaseMentor(true);
             }}
             className="fe_u_margin--right-small"
           />

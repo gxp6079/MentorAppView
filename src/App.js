@@ -14,14 +14,16 @@ function App() {
     getUsers().then((_users) => setUsers(_users));
   }, []);
 
-  function updateUser(editedUser) {
-    const editedUsers = users.map((_user) => {
-      if (_user.id === editedUser.id) {
-        return editedUser;
+  function updateUser(editedUsers) {
+    debugger;
+    const editedList = users.map((_user) => {
+      if (editedUsers.some((item) => item.id === _user.id)) {
+        return editedUsers.filter((_edit) => _edit.id === _user.id)[0];
       }
       return _user;
     });
-    setUsers(editedUsers);
+    setUsers(editedList);
+    debugger;
   }
 
   return (
