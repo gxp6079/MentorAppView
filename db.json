@@ -3,7 +3,10 @@
     {
       "name": "usr1",
       "menteeCapacity": 3,
-      "mentees": [0, 1],
+      "mentees": [
+        0,
+        1
+      ],
       "pastMentees": [],
       "mentor": null,
       "searching": true,
@@ -12,7 +15,9 @@
     {
       "name": "usr2",
       "menteeCapacity": 2,
-      "mentees": [2],
+      "mentees": [
+        2
+      ],
       "pastMentees": [],
       "mentor": 0,
       "searching": false,

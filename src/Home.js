@@ -5,19 +5,16 @@ import { editUser } from "./api/userAPI";
 import { getRelations } from "./api/relationshipAPI";
 
 function Home(props) {
+  debugger;
   const match = useRouteMatch();
   const { userId } = match.params;
   const [user, setUser] = useState(
     props.users.filter((_user) => _user.id === parseInt(userId))[0]
   );
   const [loggingOut, setLoggingOut] = useState(false);
-  const [mentoringStatus, setMentoringStatus] = useState(
-    user.menteeCapacity !== 0 || user.mentees.length !== 0
-      ? "My Mentees"
-      : "Become a Mentor"
-  );
   const [mentees, setMentees] = useState([]);
   const [mentor, setMentor] = useState(null);
+  debugger;
 
   useEffect(() => {
     getRelations().then((_relations) => {
@@ -45,7 +42,6 @@ function Home(props) {
     editUser(newUser);
     props.updateUser([newUser]);
     setUser(newUser);
-    setMentoringStatus("My Mentees");
   }
 
   function removeRelationship(mentee) {
@@ -111,7 +107,7 @@ function Home(props) {
           <Button text={"My Mentor"} className="fe_u_margin--medium" />
         </Link>
 
-        {mentoringStatus === "My Mentees" ? (
+        {user && (user.menteeCapacity !== 0 || user.mentees.length > 0) ? (
           <Link
             to={{
               pathname: "/userPage/mentee",
@@ -130,7 +126,7 @@ function Home(props) {
           </Link>
         ) : (
           <Button
-            text={mentoringStatus}
+            text={"Become a Mentor"}
             onClick={setSearchingForMentee}
             className="fe_u_margin--medium"
           />
