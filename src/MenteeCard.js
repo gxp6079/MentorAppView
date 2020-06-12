@@ -9,8 +9,7 @@ function MenteeCard(props) {
   const months = moment.duration(diff).asMonths();
 
   function updateTime() {
-    debugger;
-    props.updateTime(props.mentoringRelation.id);
+    props.update(props.mentoringRelation);
   }
 
   return (

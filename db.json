@@ -3,10 +3,7 @@
     {
       "name": "usr1",
       "menteeCapacity": 3,
-      "mentees": [
-        0,
-        1
-      ],
+      "mentees": [0, 1],
       "pastMentees": [],
       "mentor": null,
       "searching": true,
@@ -15,9 +12,7 @@
     {
       "name": "usr2",
       "menteeCapacity": 2,
-      "mentees": [
-        2
-      ],
+      "mentees": [2],
       "pastMentees": [],
       "mentor": 0,
       "searching": false,
@@ -74,7 +69,7 @@
       "mentor": "usr1",
       "mentee": "usr3",
       "matchedDate": "01/15/2020",
-      "expirationDate": "07/11/2020",
+      "expirationDate": "07/15/2020",
       "menteeUpdate": false,
       "mentorUpdate": false,
       "id": 1

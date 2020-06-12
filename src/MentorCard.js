@@ -12,7 +12,7 @@ function MentorCard(props) {
   const weeks = moment.duration(started).asWeeks();
 
   function updateTime() {
-    props.updateTime(true);
+    props.update();
   }
 
   function releaseMentor(searching) {

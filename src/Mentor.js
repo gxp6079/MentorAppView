@@ -2,13 +2,19 @@ import React, { useState } from "react";
 import { Heading, Button, Banner, BannerItem } from "@athena/forge";
 import MentorCard from "./MentorCard";
 import moment from "moment";
-import { editRelations } from "./api/relationshipAPI";
+import { editRelations, getRelation } from "./api/relationshipAPI";
 import { editUser } from "./api/userAPI";
 
 function Mentor(props) {
   const [user, setUser] = useState(props.location.query.user);
   const [mentor, setMentor] = useState(props.location.query.mentor);
   debugger;
+
+  function getUpdatedRealtion() {
+    getRelation(mentor).then((updatedMentor) => {
+      return updateTime(updatedMentor, true);
+    });
+  }
 
   function setSearchingForMentor() {
     const newUser = { ...user, searching: true };
@@ -17,9 +23,9 @@ function Mentor(props) {
     setUser(newUser);
   }
 
-  function updateTime(renew) {
-    const newMentor = { ...mentor };
-    if (mentor.mentorUpdate && renew) {
+  function updateTime(updatedMentor, renew) {
+    const newMentor = { ...updatedMentor };
+    if (renew && mentor.mentorUpdate) {
       const newExp = moment(mentor.expirationDate)
         .add(6, "months")
         .format("MM/DD/YYYY");
@@ -46,7 +52,7 @@ function Mentor(props) {
     editUser(newUser).then(() => {
       setUser(newUser);
       setMentor(null);
-      updateTime(false);
+      updateTime(mentor, false);
       props.location.query.removeMentor(newUser);
     });
   }
@@ -64,7 +70,7 @@ function Mentor(props) {
       {mentor !== null && (
         <MentorCard
           mentorinRelation={mentor}
-          updateTime={updateTime}
+          update={getUpdatedRealtion}
           releaseMentor={releaseMentor}
         />
       )}

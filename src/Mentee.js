@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Heading, Select, Button, Banner, BannerItem } from "@athena/forge";
 import { editUser } from "./api/userAPI";
-import { editRelations } from "./api/relationshipAPI";
+import { editRelations, getRelation } from "./api/relationshipAPI";
 import MenteeCard from "./MenteeCard";
 import moment from "moment";
 
@@ -15,6 +15,18 @@ function Mentee(props) {
   );
   const [showBanner, setShowBanner] = useState(false);
 
+  function getUpdatedRelation(mentee) {
+    getRelation(mentee).then((updatedMentee) => {
+      const newMentees = mentees.map((_mentee) => {
+        if (_mentee.id === mentee.id) {
+          return updatedMentee;
+        }
+        return _mentee;
+      });
+      return updateTime(newMentees, mentee);
+    });
+  }
+
   function updateCapacity() {
     const newUser = { ...user, menteeCapacity: capacity };
     editUser(newUser).then(() => {
@@ -25,9 +37,9 @@ function Mentee(props) {
     });
   }
 
-  function updateTime(relationId) {
-    const newMentees = mentees.map((_mentee) => {
-      if (_mentee.id === relationId) {
+  function updateTime(updatedMentees, mentee) {
+    const newMentees = updatedMentees.map((_mentee) => {
+      if (_mentee.id === mentee.id) {
         if (_mentee.menteeUpdate) {
           const newExp = moment(_mentee.expirationDate)
             .add(6, "months")
@@ -40,7 +52,7 @@ function Mentee(props) {
       return _mentee;
     });
     const editedRelation = newMentees.filter(
-      (mentee) => mentee.id === relationId
+      (_mentee) => _mentee.id === mentee.id
     )[0];
     setMentees(newMentees);
     editRelations(editedRelation);
@@ -81,7 +93,7 @@ function Mentee(props) {
               <li key={_mentee.id} className="fe_u_font-size--large">
                 <MenteeCard
                   mentoringRelation={_mentee}
-                  updateTime={updateTime}
+                  update={getUpdatedRelation}
                 />
               </li>
             );

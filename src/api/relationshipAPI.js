@@ -7,6 +7,17 @@ export function getRelations() {
   });
 }
 
+export async function getRelation(relation) {
+  return fetch("http://localhost:3001/mentoring-relations/" + relation.id).then(
+    (response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Bad network response.");
+    }
+  );
+}
+
 export function editRelations(relation) {
   return fetch("http://localhost:3001/mentoring-relations/" + relation.id, {
     method: "PUT",
